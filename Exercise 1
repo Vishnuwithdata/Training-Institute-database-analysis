@@ -1,0 +1,126 @@
+use practice_sql ;
+
+Create table students (
+Student_id int primary key,
+Student_Name Varchar(40),
+City Varchar (20),
+age int
+) ;
+
+Insert into Students 
+values (1,"Arun", "Chennai", 21), 
+(2,"Priya", "Bangalore", 22),
+(3,"Rahul", "Chennai", 20),
+(4,"Divya", "Hyderabad", 23),
+(5,"Karthik", "Chennai", 21),
+(6,"Meena", "Coimbatore", 22) 
+
+Select * from Students
+
+Create table Instructor (
+Instructor_ID int primary key,
+Instructor_Name Varchar (40),
+Specialization Varchar (40)
+)
+Insert into Instructor Values
+(101, "Ravikumar", "Java"),
+(102,"Priya Sharma", "Python"),
+(103,"Suresh", "Data Science"),
+(104, "Anitha", "Web Development"),
+(105,"Manoj", "Cloud Computing")
+
+select* from Instructor
+
+create table course (
+Course_id int Primary key,
+Course_Name Varchar(30),
+fee int,
+Instructor_id Int,
+foreign key (instructor_id) references Instructor(Instructor_ID)
+)
+
+Insert into Course values (206, "Docker",8000,105)
+(201,"Java Programming",12000,101),
+(202,"Python Programming", 10000, 102),
+(203, "Data Science", 18000, 103),
+(204, "React Js", "9000", 104),
+(205, "AWS Cloud", "10000",105)
+
+select * from Course
+
+Create table Enrollment (
+Enrollment_id int primary key,
+Student_id int,
+Course_id int,
+Enrollment_date date,
+Status Varchar(20),
+foreign key (Student_Id) references students(Student_id),
+foreign key (course_id) references Course(Course_id)
+)
+
+select* from Enrollment
+
+Insert into Enrollment values
+(301,1,201,"2026-08-01","Completed"),
+(302,1,202,"2026-08-02","Active"),
+(303,2,201,"2026-08-03","Active"),
+(304,2,204,"2026-08-04","Completed"),
+(305,3,203,"2026-08-05","Active"),
+(306,4,202,"2026-08-06","Completed"),
+(307,4,205,"2026-08-07","Active"),
+(308,5,201,"2026-08-08","Active"),
+(309,5,206,"2026-08-09","Active")
+
+Create table Payment (
+Payment_id int primary key,
+Enrollment_id int,
+amount int,
+Payment_date date,
+Payment_status varchar(25),
+Foreign key (Enrollment_id) references Enrollment(Enrollment_id)
+)
+
+Select*from payment
+
+insert into payment values 
+(401,301,12000,"2026-08-01", "Paid"),
+(402, 302, 10000, "2026-08-02", "Paid"),
+(403, 303, 6000, "2026-08-03", "Partial"),
+(404, 304, 9000,"2026-08-04","Paid"),
+(405, 305, 10000,"2026-08-05","Partial"),
+(406, 306, 10000, "2026-08-06","Paid"),
+(407, 307, 15000, "2026-08-07","Paid"),
+(408, 308, 12000, "2026-08-08","Paid")
+
+select s.student_id, s.student_name, s.city, s.age, e.enrollment_id, e.course_id, e.enrollment_date, e.status from students s 
+Left join Enrollment e on s.student_id = E.student_id 
+group by s.student_id
+
+select p.payment_id, p.amount, p.payment_date, p.payment_status,E.enrollment_id, e.course_id, e.enrollment_date, e.status 
+from payment p right join enrollment e on p.enrollment_id=e.enrollment_id
+
+select s.student_name, c.course_name from students s 
+left join enrollment e on  e.student_id = s.student_id
+left join course c on e.Course_id = c.course_id 
+
+select s.student_name, c.course_name, e.Enrollment_date from students s 
+left join enrollment e on  e.student_id = s.student_id
+left join course c on e.Course_id = c.course_id 
+
+select c.course_name, I.Instructor_name from course c 
+left join Instructor I on  c.Instructor_id = I.Instructor_id
+
+select s.student_name, c.course_name, I.Instructor_Name from students s 
+left join enrollment e on  e.student_id = s.student_id
+left join course c on e.Course_id = c.course_id 
+left join Instructor I on c.instructor_id = i.instructor_id
+
+
+
+
+
+
+
+
+
+
