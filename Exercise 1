@@ -92,28 +92,67 @@ insert into payment values
 (407, 307, 15000, "2026-08-07","Paid"),
 (408, 308, 12000, "2026-08-08","Paid")
 
+-- Notice which student not Enrolled
 select s.student_id, s.student_name, s.city, s.age, e.enrollment_id, e.course_id, e.enrollment_date, e.status from students s 
 Left join Enrollment e on s.student_id = E.student_id 
 group by s.student_id
 
+-- Display who enrolled but not done payment
 select p.payment_id, p.amount, p.payment_date, p.payment_status,E.enrollment_id, e.course_id, e.enrollment_date, e.status 
 from payment p right join enrollment e on p.enrollment_id=e.enrollment_id
 
+-- Display the student name along with the course name.
 select s.student_name, c.course_name from students s 
 left join enrollment e on  e.student_id = s.student_id
 left join course c on e.Course_id = c.course_id 
 
+-- Display student name, course name, and enrollment date.
 select s.student_name, c.course_name, e.Enrollment_date from students s 
 left join enrollment e on  e.student_id = s.student_id
 left join course c on e.Course_id = c.course_id 
 
+-- Display course name along with instructor name.
 select c.course_name, I.Instructor_name from course c 
 left join Instructor I on  c.Instructor_id = I.Instructor_id
 
+-- Display student name, course name, and instructor name.
 select s.student_name, c.course_name, I.Instructor_Name from students s 
 left join enrollment e on  e.student_id = s.student_id
 left join course c on e.Course_id = c.course_id 
 left join Instructor I on c.instructor_id = i.instructor_id
+
+-- Display enrollment ID, student name, course name, and enrollment status.
+select e.enrollment_id, s.Student_name, c.course_name, e.status from enrollment e
+inner join students s on e.student_id = s.student_id
+inner join course c on e.course_id = c.course_id
+
+-- Display student name, course name, instructor name, and course fee.
+select s.student_name, c.course_name, i.instructor_name, c.fee from students s	
+left join enrollment e on e.student_id = s.student_id
+left join course c on e.course_id = c.course_id
+left join instructor I on c.Instructor_id = i.instructor_id
+
+-- Display payment ID, student name, course name, and payment amount.
+Select p.payment_id, s.student_name, c.course_name, p.amount from Payment p
+left join Enrollment e on p.enrollment_id = e.enrollment_id
+left join Students s on e.student_id = s.student_id
+left join course c on e.course_id = c.course_id
+
+-- Display student name, course name, payment amount, and payment status.
+Select s.student_name, c.course_name, p.amount, p.payment_status from payment p
+left join Enrollment e on p.enrollment_id = e.enrollment_id
+left join Students s on e.student_id = s.student_id
+left join course c on e.course_id = c.course_id
+
+-- Display all students, including students who have not enrolled in any course.
+select s.student_id, s.student_name, s.city, s.age, e.enrollment_id, e.course_id, e.enrollment_date, e.status from students s 
+Left join Enrollment e on s.student_id = E.student_id 
+group by s.student_id
+
+-- Display all instructors, including instructors who are not teaching any course.
+select I.instructor_name, s.student_name from instructor i 
+left join enrollment e on e.Student_d - s.student Id
+left 
 
 
 
