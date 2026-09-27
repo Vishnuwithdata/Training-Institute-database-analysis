@@ -150,9 +150,12 @@ Left join Enrollment e on s.student_id = E.student_id
 group by s.student_id
 
 -- Display all instructors, including instructors who are not teaching any course.
-select I.instructor_name, s.student_name from instructor i 
-left join enrollment e on e.Student_d - s.student Id
-left 
+select I.instructor_name, c.course_name from instructor i 
+left join course c on c.instructor_id = I.instructor_Id
+
+-- Display all courses, including courses in which no student has enrolled.
+select c.course_name, e.enrollment_id from course c
+left join enrollment e on e.course_id = c.course_id
 
 
 
